@@ -15,24 +15,24 @@ namespace ApiFilm.Services
 
         public IEnumerable<Movie> GetAllMovies()
         {
-            return _context.Movies.ToList();
+            return _context.Movie.ToList();
         }
 
         public Movie GetMovieById(int id)
         {
-            return _context.Movies.FirstOrDefault(m => m.Id == id);
+            return _context.Movie.FirstOrDefault(m => m.Id == id);
         }
 
         public Movie AddMovie(Movie movie)
         {
-            _context.Movies.Add(movie);
+            _context.Movie.Add(movie);
             _context.SaveChanges();
             return movie;
         }
 
         public Movie UpdateMovie(int id, Movie updatedMovie)
         {
-            var movie = _context.Movies.FirstOrDefault(m => m.Id == id);
+            var movie = _context.Movie.FirstOrDefault(m => m.Id == id);
             if (movie == null) return null;
 
             movie.Title = updatedMovie.Title;
@@ -40,17 +40,17 @@ namespace ApiFilm.Services
             movie.Genre = updatedMovie.Genre;
             movie.ReleaseDate = updatedMovie.ReleaseDate;
             movie.Rating = updatedMovie.Rating;
-
+            movie.ImageUrl = updatedMovie.ImageUrl;
             _context.SaveChanges();
             return movie;
         }
 
         public void DeleteMovie(int id)
         {
-            var movie = _context.Movies.FirstOrDefault(m => m.Id == id);
+            var movie = _context.Movie.FirstOrDefault(m => m.Id == id);
             if (movie != null)
             {
-                _context.Movies.Remove(movie);
+                _context.Movie.Remove(movie);
                 _context.SaveChanges();
             }
         }
