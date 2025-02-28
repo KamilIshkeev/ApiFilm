@@ -41,6 +41,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
+
 }
 app.UseCors("AllowAllOrigins");
 
@@ -48,10 +49,15 @@ app.UseCors("AllowAllOrigins");
 
 app.UseRouting();
 
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+
 
 app.Run();
+
+
+
+

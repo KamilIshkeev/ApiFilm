@@ -14,5 +14,7 @@ namespace ApiFilm.DataBaseContext
 
         public DbSet<User> User { get; set; }
         public DbSet<Movie> Movie { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<MessagePhoto> MessagePhotos { get; set; }
     }
 }
