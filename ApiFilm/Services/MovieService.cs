@@ -22,6 +22,12 @@ namespace ApiFilm.Services
         {
             return _context.Movie.FirstOrDefault(m => m.Id == id);
         }
+        
+        public Movie GetMovieByTitle(string title)
+        {
+            return _context.Movie.FirstOrDefault(m => m.Title == title);
+        }
+
 
         public Movie AddMovie(Movie movie)
         {

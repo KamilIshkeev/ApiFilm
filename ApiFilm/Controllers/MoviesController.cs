@@ -36,6 +36,18 @@ namespace ApiFilm.Controllers
             return Ok(movie);
         }
 
+
+        [HttpGet("title/{title}")]
+        public IActionResult GetMovieTitle(string title)
+        {
+            var movie = _movieService.GetMovieByTitle(title);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            return Ok(movie);
+        }
+
         // POST: api/movies
         [HttpPost]
         public IActionResult AddMovie([FromBody] Movie movie)

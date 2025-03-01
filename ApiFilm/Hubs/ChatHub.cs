@@ -12,24 +12,26 @@ namespace ApiFilm.Hubs
             return base.OnConnectedAsync();
         }
 
-        //public async Task RegisterUser(string username)
-        //{
-        //    Users[username] = Context.ConnectionId;
+        
 
-
-        //}
-/*string recipient,*/
         public async Task SendMessage(string user, string message, string movie)
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message, movie);
 
-            //if (Users.TryGetValue(recipient, out var connectionId))
+            
+
+        }
+
+    }
+}
+
+
+        //if (Users.TryGetValue(recipient, out var connectionId))
             //{
             //await Clients.Client(connectionId).SendAsync("ReceiveMessage", user, message);
             //}
 
-
-        }
+        /*string recipient,*/
 
         //public async Task SendMessage(string recipient, string user, string message, string movName)
         //{
@@ -52,5 +54,4 @@ namespace ApiFilm.Hubs
         //    await Clients.All.SendAsync("ReceivePhoto", user, filePath, messageId);
         //}
 
-    }
-}
+
