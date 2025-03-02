@@ -3,6 +3,8 @@ using ApiFilm.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO; // Добавьте эту строку
+using System.Net.Http;
 
 namespace ApiFilm.Controllers
 {
@@ -18,15 +20,18 @@ namespace ApiFilm.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        public IActionResult GetMovies()
+        {
+            var movies = _context.Messages.ToList();
+            return Ok(movies);
+        }
+
         // Получение всех сообщений для фильма
         [HttpGet("movie/{movieId}")]
         public async Task<ActionResult<IEnumerable<Message>>> GetMessagesByMovie(int movieId)
         {
-            var messages = await _context.Messages
-                .Include(m => m.User)
-                .Include(m => m.Movie)
-                .Include(m => m.Photos)
-                .Where(m => m.MovieId == movieId)
+            var messages = await _context.Messages.Where(m => m.MovieId == movieId)
                 .ToListAsync();
             return Ok(messages);
         }
@@ -39,33 +44,15 @@ namespace ApiFilm.Controllers
 
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetMessagesByMovie), new { id = message.Id }, message);
+            return CreatedAtAction(nameof(GetMessagesByMovie), new { movieId = message.MovieId }, message);
         }
 
-        // Загрузка фотографий
-        [HttpPost("upload-photo")]
-        [ApiExplorerSettings(IgnoreApi = true)] // Исключаем из Swagger
-        public async Task<ActionResult<MessagePhoto>> UploadPhoto([FromForm] IFormFile file, [FromForm] int messageId)
+        [HttpGet("lsMessage")]
+        public IActionResult GetLsMessage()
         {
-            if (file == null || file.Length == 0) return BadRequest();
-
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", file.FileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            var photo = new MessagePhoto
-            {
-                FilePath = $"uploads/{file.FileName}",
-                MessageId = messageId
-            };
-
-            _context.MessagePhotos.Add(photo);
-            await _context.SaveChangesAsync();
-
-            return Ok(photo);
+            var movies = _context.LsMessages.ToList();
+            return Ok(movies);
         }
+
     }
 }

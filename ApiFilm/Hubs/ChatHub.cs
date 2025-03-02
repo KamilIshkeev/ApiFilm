@@ -22,6 +22,40 @@ namespace ApiFilm.Hubs
 
         }
 
+
+        public async Task SendPhoto(string user, string photoPath, string movie)
+        {
+            await Clients.All.SendAsync("ReceivePhoto", user, photoPath, movie);
+        }
+
+        public async Task RegisterUser(string username)
+        {
+            Users[username] = Context.ConnectionId;
+
+
+        }
+
+        public async Task SendMessageLs(string recipient, string user, string message)
+        {
+            if (Users.TryGetValue(recipient, out var connectionId))
+            {
+                await Clients.Client(connectionId).SendAsync("ReceiveMessageLs", user, message);
+            }
+
+
+        }
+
+        public async Task SendPhotoLs(string recipient, string user, string photoPath)
+        {
+            if (Users.TryGetValue(recipient, out var connectionId))
+            {
+                await Clients.Client(connectionId).SendAsync("ReceivePhotoLs", user, photoPath);
+            }
+
+
+        }
+
+
     }
 }
 

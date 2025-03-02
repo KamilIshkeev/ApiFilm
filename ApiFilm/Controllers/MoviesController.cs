@@ -37,7 +37,7 @@ namespace ApiFilm.Controllers
         }
 
 
-        [HttpGet("title/{title}")]
+        [HttpGet("titles/{title}")]
         public IActionResult GetMovieTitle(string title)
         {
             var movie = _movieService.GetMovieByTitle(title);
