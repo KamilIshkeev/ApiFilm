@@ -54,5 +54,18 @@ namespace ApiFilm.Controllers
             return Ok(movies);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var mes = await _context.Messages.FindAsync(id);
+            if (mes == null)
+            { 
+                return BadRequest();
+            }
+            _context.Messages.Remove(mes);
+            await _context.SaveChangesAsync();
+            return Ok(mes);
+        }
+
     }
 }
