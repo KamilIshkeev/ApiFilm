@@ -44,7 +44,7 @@ namespace ApiFilm.Hubs
 
 
         }
-
+        
         public async Task SendPhotoLs(string recipient, string user, string photoPath)
         {
             if (Users.TryGetValue(recipient, out var connectionId))

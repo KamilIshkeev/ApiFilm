@@ -67,5 +67,16 @@ namespace ApiFilm.Controllers
             return Ok(mes);
         }
 
+        // Отправка нового сообщения
+        [HttpPost("lsMes")]
+        public async Task<ActionResult<LsMessage>> PostLsMessage([FromBody] LsMessage message)
+        {
+            if (message == null) return BadRequest();
+
+            _context.LsMessages.Add(message);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetLsMessage), new { Id = message.Id }, message);
+        }
+
     }
 }
