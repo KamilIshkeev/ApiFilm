@@ -55,7 +55,7 @@ namespace ApiFilm.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteMes(int id)
         {
             var mes = await _context.Messages.FindAsync(id);
             if (mes == null)
@@ -76,6 +76,62 @@ namespace ApiFilm.Controllers
             _context.LsMessages.Add(message);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetLsMessage), new { Id = message.Id }, message);
+        }
+
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateMes(int id, [FromBody] Message updatedMes)
+        {
+            var mes = _context.Messages.FirstOrDefault(m => m.Id == id);
+            if (mes == null)
+            {
+                return NotFound();
+            }
+
+            mes.Id = mes.Id;
+            mes.Content = updatedMes.Content;
+            mes.UserId = mes.UserId;
+            mes.MovieId = mes.MovieId;
+            mes.CreatedAt = mes.CreatedAt;
+            mes.Url = updatedMes.Url;
+            _context.SaveChanges();
+            
+
+            return NoContent();
+        }
+
+        [HttpDelete("Mes/{id}")]
+        public async Task<IActionResult> DeleteLsMes(int id)
+        {
+            var mes = await _context.LsMessages.FindAsync(id);
+            if (mes == null)
+            {
+                return BadRequest();
+            }
+            _context.LsMessages.Remove(mes);
+            await _context.SaveChangesAsync();
+            return Ok(mes);
+        }
+
+        [HttpPut("LsMes/{id}")]
+        public IActionResult UpdateLsMes(int id, [FromBody] LsMessage updatedMes)
+        {
+            var mes = _context.LsMessages.FirstOrDefault(m => m.Id == id);
+            if (mes == null)
+            {
+                return NotFound();
+            }
+
+            mes.Id = mes.Id;
+            mes.Content = updatedMes.Content;
+            mes.UserId1 = mes.UserId1;
+            mes.UserId2 = mes.UserId2;
+            mes.CreatedAt = mes.CreatedAt;
+            mes.Url = updatedMes.Url;
+            _context.SaveChanges();
+
+
+            return NoContent();
         }
 
     }
