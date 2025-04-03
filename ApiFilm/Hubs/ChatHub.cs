@@ -28,6 +28,7 @@ namespace ApiFilm.Hubs
             await Clients.All.SendAsync("ReceivePhoto", user, photoPath, movie);
         }
 
+
         public async Task RegisterUser(string username)
         {
             Users[username] = Context.ConnectionId;
